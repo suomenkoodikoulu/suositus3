@@ -1,0 +1,28 @@
+<form class="form" action="result" method="post">
+    First name:<br>
+    <input type="text" name="firstname" size="32" style="width: 250px">
+    <br>
+    Last name:<br>
+    <input type="text" name="lastname"  size="32" style="width: 250px">
+    <br>
+    Email:<br>
+    <input type="text" name="email" size="32" style="width: 250px" data-mage-init='{ "survey_result": {message: "Moikkelis"} }'>
+    <br>
+    What is our best product?<br>
+
+    <br>
+    <?php
+    $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+    /** @var \Magento\Catalog\Model\ResourceModel\Product\Collection $productCollection */
+    $productCollection = $objectManager->create('Magento\Catalog\Model\ResourceModel\Product\Collection');
+    /** Apply filters here */
+    $collection = $productCollection->addAttributeToSelect('*')
+        ->load();
+
+    foreach ($collection as $product){
+        echo '<input type="radio" name="button" value="'.$product->getName().'">'.$product->getName().'<br>';
+    }
+    ?>
+    <br>
+    <input type="submit" name="submit" value="Submit"
+</form>
